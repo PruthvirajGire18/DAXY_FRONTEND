@@ -1,16 +1,78 @@
-# React + Vite
+# 🔥 Saurabh Task Tracker (Admin + Intern Role Based Task Management)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack task tracker application where an **Admin (Yash)** creates & manages tasks for an **Intern (Saurabh)**.  
+Intern can update task progress and create self-tasks.  
+Authentication + Authorization implemented using JWT.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## React Compiler
+| Layer | Technology |
+|-------|------------|
+| Frontend | React + Context API + Custom UI Components |
+| Backend | Node.js, Express.js |
+| Database | MongoDB + Mongoose |
+| Auth | JWT (Role-Based) |
+| UI Design | Modern Dark Theme |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 👥 User Roles & Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🧑‍💼 Admin (Yash)
+- Login
+- Create / Edit / Delete tasks
+- Assign tasks to intern
+- View **ALL** tasks
+- Dashboard analytics *(optional expand future)*
+
+---
+
+### 👨‍💻 Intern (Saurabh)
+- Login
+- View only **own assigned tasks**
+- Update status: `todo → in-progress → done`
+- Add progress notes
+- Create self-tasks
+- Self-tasks automatically marked with **Self Task badge**
+
+---
+
+## 🔑 Login Credentials
+
+| Role | Email | Password |
+|------|------|----------|
+| Admin | `admin@yash.com` | `admin123` |
+| Intern | `saurabh@example.com` | `saurabh123` |
+
+---
+
+## 🧩 Core API Endpoints
+
+| Method | Endpoint | Role | Description |
+|--------|----------|------|-------------|
+| POST | /api/auth/login | All | Login using email & password |
+| GET | /api/tasks | Admin / Intern | Get tasks based on role |
+| POST | /api/tasks | Admin / Intern | Create tasks (intern → self-task only) |
+| PATCH | /api/tasks/:id | Admin / Intern | Update task / Add progress note |
+| DELETE | /api/tasks/:id | Admin only | Delete task |
+
+---
+
+## 📌 Task Schema
+
+```js
+{
+  title: String,
+  description: String,
+  assignedTo: String,
+  status: "todo" | "in-progress" | "done",
+  priority: "low" | "medium" | "high",
+  dueDate: Date,
+  createdBy: ObjectId,
+  isSelfTask: Boolean,
+  progressNotes: [
+    { text: String, createdAt: Date }
+  ]
+}
